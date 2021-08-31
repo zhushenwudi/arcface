@@ -1,0 +1,3 @@
+rootProject.name = "BaseArcface"
+//include ':app'
+include ':arcface'
