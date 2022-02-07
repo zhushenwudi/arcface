@@ -274,14 +274,16 @@ class FaceAppViewModel : BaseAppViewModel() {
                     var processRgbLivenessCode = -1
                     flEngine?.let {
                         synchronized(it) {
-                            processRgbLivenessCode = it.process(
-                                nv21,
-                                previewSize!!.width,
-                                previewSize!!.height,
-                                FaceEngine.CP_PAF_NV21,
-                                listOf(facePreviewInfoList[0].faceInfoRgb),
-                                FaceEngine.ASF_LIVENESS
-                            )
+                            if (facePreviewInfoList[0].faceInfoRgb != null) {
+                                processRgbLivenessCode = it.process(
+                                    nv21,
+                                    previewSize!!.width,
+                                    previewSize!!.height,
+                                    FaceEngine.CP_PAF_NV21,
+                                    listOf(facePreviewInfoList[0].faceInfoRgb),
+                                    FaceEngine.ASF_LIVENESS
+                                )
+                            }
                         }
                     }
                     if (processRgbLivenessCode != ErrorInfo.MOK) {
