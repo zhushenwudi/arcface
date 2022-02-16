@@ -26,7 +26,7 @@ object ActiveUtil {
      */
     fun getActiveFilePath(): String? {
         val files = FileUtils.listFilesInDirWithFilter(FILE_DIR) { it.name.contains(filterName) }
-        if (files.size == 0) {
+        if (files == null || files.size == 0) {
             return null
         }
         return files[0].absolutePath
