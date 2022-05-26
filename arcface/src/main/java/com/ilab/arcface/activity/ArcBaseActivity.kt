@@ -5,8 +5,11 @@ import android.graphics.Shader
 import android.hardware.Camera
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
+import android.widget.FrameLayout
+import androidx.databinding.DataBindingUtil
 import com.arcsoft.face.ErrorInfo
 import com.arcsoft.face.LivenessInfo
 import com.ftd.livepermissions.LivePermissions
@@ -28,9 +31,10 @@ import com.zhushenwudi.base.ext.view.clickNoRepeat
 import com.zhushenwudi.base.mvvm.v.BaseVmDbActivity
 import com.zhushenwudi.base.mvvm.vm.BaseAppViewModel
 import com.zhushenwudi.base.network.manager.NetState
+import java.lang.reflect.InvocationTargetException
+import java.lang.reflect.ParameterizedType
 
-abstract class ArcBaseActivity<VM : BaseAppViewModel> :
-    BaseVmDbActivity<FaceAppViewModel, ActivityFaceBinding>(),
+abstract class ArcBaseActivity<VM: BaseAppViewModel> : BaseVmDbActivity<FaceAppViewModel, ActivityFaceBinding>(),
     OnGlobalLayoutListener {
     protected var allowedHandle: Boolean = true//是否允许处理识别
     private var rgbFaceRectTransformer: FaceRectTransformer? = null
@@ -38,6 +42,12 @@ abstract class ArcBaseActivity<VM : BaseAppViewModel> :
 
     // 记录前一次的人脸识别状态，防止反复刷新界面
     private var preFaceStatus = 2
+
+    final override fun initDataBind(): View {
+        bind = DataBindingUtil.inflate(layoutInflater, R.layout.activity_face, null, false)
+        bind.lifecycleOwner = this
+        return bind.root
+    }
 
     override fun initView(savedInstanceState: Bundle?) {
         bind.data = mViewModel
