@@ -39,49 +39,47 @@ abstract class ArcBaseActivity<VM : BaseAppViewModel> :
     // 记录前一次的人脸识别状态，防止反复刷新界面
     private var preFaceStatus = 2
 
-    override fun layoutId() = R.layout.activity_face
-
     override fun initView(savedInstanceState: Bundle?) {
-        mDatabind.data = mViewModel
-        mDatabind.tvTips.visibility = View.VISIBLE
-        mDatabind.textureRgb.viewTreeObserver.addOnGlobalLayoutListener(this)
+        bind.data = mViewModel
+        bind.tvTips.visibility = View.VISIBLE
+        bind.textureRgb.viewTreeObserver.addOnGlobalLayoutListener(this)
 
         initListener()
     }
 
     private fun initListener() {
-        mDatabind.btnClose.clickNoRepeat {
+        bind.btnClose.clickNoRepeat {
             setResult(RESULT_CANCELED)
             finish()
         }
 
-        mDatabind.modal.clickNoRepeat {
-            mDatabind.flCamera.visibility = View.VISIBLE
-            mDatabind.tvTips.visibility = View.VISIBLE
-            mDatabind.bgFace.visibility = View.VISIBLE
-            mDatabind.modal.visibility = View.INVISIBLE
+        bind.modal.clickNoRepeat {
+            bind.flCamera.visibility = View.VISIBLE
+            bind.tvTips.visibility = View.VISIBLE
+            bind.bgFace.visibility = View.VISIBLE
+            bind.modal.visibility = View.INVISIBLE
             allowedHandle = true
             FaceAppViewModel.Status.REQUEST
         }
     }
 
     open fun setTipsText(content: String) {
-        mDatabind.tvTips.text = content
+        bind.tvTips.text = content
     }
 
     open fun changeModal(drawable: Int, tip: String) {
-        mDatabind.ivScanFace.setBackgroundResource(drawable)
-        mDatabind.tvTips.visibility = View.GONE
-        mDatabind.bgFace.visibility = View.GONE
-        mDatabind.modal.visibility = View.VISIBLE
-        mDatabind.flCamera.visibility = View.INVISIBLE
-        mDatabind.tvHint.text = tip
+        bind.ivScanFace.setBackgroundResource(drawable)
+        bind.tvTips.visibility = View.GONE
+        bind.bgFace.visibility = View.GONE
+        bind.modal.visibility = View.VISIBLE
+        bind.flCamera.visibility = View.INVISIBLE
+        bind.tvHint.text = tip
         //请求结束 下一轮开始(一次请求失败/多人认证)
         changeToReady()
     }
 
     open fun setSecond(second: Int) {
-        mDatabind.tvSecond.text = "${second}s"
+        bind.tvSecond.text = "${second}s"
     }
 
     override fun createObserver() {
@@ -117,21 +115,21 @@ abstract class ArcBaseActivity<VM : BaseAppViewModel> :
                     LivenessInfo.ALIVE -> {
                         it.second?.run {
                             mViewModel.processStatus.value = FaceAppViewModel.Status.REQUEST
-                            mDatabind.tvTips.text = Const.SINGLE_CHECK_SUCCESS
+                            bind.tvTips.text = Const.SINGLE_CHECK_SUCCESS
                             onDetectSuccess(this)
                         }
                     }
-                    LivenessInfo.NOT_ALIVE -> mDatabind.tvTips.text = Const.SINGLE_CHECK_FAILED
-                    LivenessInfo.UNKNOWN -> mDatabind.tvTips.text = Const.SINGLE_NOT_FOUND_FACE
-                    LivenessInfo.FACE_NUM_MORE_THAN_ONE -> mDatabind.tvTips.text = Const.MULTI_PEOPLE
-                    LivenessInfo.FACE_TOO_SMALL -> mDatabind.tvTips.text = Const.FORWARD_FACE
-                    LivenessInfo.FACE_ANGLE_TOO_LARGE -> mDatabind.tvTips.text = Const.POSITIVE_SCREEN
-                    LivenessInfo.TOO_BRIGHT_IR_IMAGE -> mDatabind.tvTips.text = Const.FULL_LIGHT
-                    Const.CODE_BACKWARD -> mDatabind.tvTips.text = Const.BACKWARD_FACE
-                    Const.CODE_LEFT -> mDatabind.tvTips.text = Const.LEFT_FACE
-                    Const.CODE_UP -> mDatabind.tvTips.text = Const.UP_FACE
-                    Const.CODE_RIGHT -> mDatabind.tvTips.text = Const.RIGHT_FACE
-                    Const.CODE_DOWN -> mDatabind.tvTips.text = Const.DOWN_FACE
+                    LivenessInfo.NOT_ALIVE -> bind.tvTips.text = Const.SINGLE_CHECK_FAILED
+                    LivenessInfo.UNKNOWN -> bind.tvTips.text = Const.SINGLE_NOT_FOUND_FACE
+                    LivenessInfo.FACE_NUM_MORE_THAN_ONE -> bind.tvTips.text = Const.MULTI_PEOPLE
+                    LivenessInfo.FACE_TOO_SMALL -> bind.tvTips.text = Const.FORWARD_FACE
+                    LivenessInfo.FACE_ANGLE_TOO_LARGE -> bind.tvTips.text = Const.POSITIVE_SCREEN
+                    LivenessInfo.TOO_BRIGHT_IR_IMAGE -> bind.tvTips.text = Const.FULL_LIGHT
+                    Const.CODE_BACKWARD -> bind.tvTips.text = Const.BACKWARD_FACE
+                    Const.CODE_LEFT -> bind.tvTips.text = Const.LEFT_FACE
+                    Const.CODE_UP -> bind.tvTips.text = Const.UP_FACE
+                    Const.CODE_RIGHT -> bind.tvTips.text = Const.RIGHT_FACE
+                    Const.CODE_DOWN -> bind.tvTips.text = Const.DOWN_FACE
                 }
             }
         }
@@ -166,15 +164,15 @@ abstract class ArcBaseActivity<VM : BaseAppViewModel> :
                     rgbFaceRectTransformer?.apply {
                         mViewModel.parseFaceInfo(it, nv21)
                         if (!BuildConfig.DEBUG) {
-                            mDatabind.dualCameraFaceRectView.clearFaceInfo()
-                            mDatabind.dualCameraFaceRectViewIr.clearFaceInfo()
+                            bind.dualCameraFaceRectView.clearFaceInfo()
+                            bind.dualCameraFaceRectViewIr.clearFaceInfo()
 //                            drawPreviewInfo(it)
                         }
                     }
                 }
             }
         }
-        mViewModel.initCameraHelper(mDatabind.textureRgb, rgbCameraListener, LivenessType.RGB)
+        mViewModel.initCameraHelper(bind.textureRgb, rgbCameraListener, LivenessType.RGB)
     }
 
     /**
@@ -203,7 +201,7 @@ abstract class ArcBaseActivity<VM : BaseAppViewModel> :
                 mViewModel.refreshIrPreviewData(nv21)
             }
         }
-        mViewModel.initCameraHelper(mDatabind.textureIr, irCameraListener, LivenessType.IR)
+        mViewModel.initCameraHelper(bind.textureIr, irCameraListener, LivenessType.IR)
     }
 
     /**
@@ -218,9 +216,9 @@ abstract class ArcBaseActivity<VM : BaseAppViewModel> :
     ): FaceRectTransformer {
         val previewSize = camera.parameters.previewSize
         val layoutParams = CameraUtil.adjustPreviewViewSize(
-            mDatabind.textureRgb,
-            if (type == LivenessType.RGB) mDatabind.textureRgb else mDatabind.textureIr,
-            if (type == LivenessType.RGB) mDatabind.dualCameraFaceRectView else mDatabind.dualCameraFaceRectViewIr,
+            bind.textureRgb,
+            if (type == LivenessType.RGB) bind.textureRgb else bind.textureIr,
+            if (type == LivenessType.RGB) bind.dualCameraFaceRectView else bind.dualCameraFaceRectViewIr,
             previewSize,
             displayOrientation,
             1f
@@ -241,11 +239,11 @@ abstract class ArcBaseActivity<VM : BaseAppViewModel> :
     private fun drawPreviewInfo(facePreviewInfoList: List<FacePreviewInfo>) {
         rgbFaceRectTransformer?.let {
             val rgbDrawInfoList = mViewModel.getDrawInfo(facePreviewInfoList, LivenessType.RGB)
-            mDatabind.dualCameraFaceRectView.drawRealtimeFaceInfo(rgbDrawInfoList)
+            bind.dualCameraFaceRectView.drawRealtimeFaceInfo(rgbDrawInfoList)
         }
         irFaceRectTransformer?.let {
             val irDrawInfoList = mViewModel.getDrawInfo(facePreviewInfoList, LivenessType.IR)
-            mDatabind.dualCameraFaceRectViewIr.drawRealtimeFaceInfo(irDrawInfoList)
+            bind.dualCameraFaceRectViewIr.drawRealtimeFaceInfo(irDrawInfoList)
         }
     }
 
@@ -253,7 +251,7 @@ abstract class ArcBaseActivity<VM : BaseAppViewModel> :
      * 布局加载完成
      */
     override fun onGlobalLayout() {
-        mDatabind.textureRgb.viewTreeObserver.removeOnGlobalLayoutListener(this)
+        bind.textureRgb.viewTreeObserver.removeOnGlobalLayoutListener(this)
 
         LivePermissions(this)
             .requestArray(COMMON_PERMISSION)
@@ -299,9 +297,9 @@ abstract class ArcBaseActivity<VM : BaseAppViewModel> :
 
     private fun initEngine() {
         mViewModel.init(DualCameraHelper.canOpenDualCamera())
-        mViewModel.faceDetectRect = FaceUtil.getRectInScreen(mDatabind.faceRectView)
+        mViewModel.faceDetectRect = FaceUtil.getRectInScreen(bind.faceRectView)
         // 获取识别框检测区域在屏幕的绝对位置
-        mDatabind.faceRectView.getGlobalVisibleRect(mViewModel.faceDetectRect)
+        bind.faceRectView.getGlobalVisibleRect(mViewModel.faceDetectRect)
         initRgbCamera()
 //        if (DualCameraHelper.hasDualCamera()) {
 //            initIrCamera()
@@ -318,13 +316,13 @@ abstract class ArcBaseActivity<VM : BaseAppViewModel> :
             0f,
             0f,
             0f,
-            mDatabind.tvTitle.lineHeight.toFloat(),
+            bind.tvTitle.lineHeight.toFloat(),
             start,
             end,
             Shader.TileMode.CLAMP
         )
-        mDatabind.tvTitle.paint.shader = shader
-        mDatabind.tvTitle.text = title
+        bind.tvTitle.paint.shader = shader
+        bind.tvTitle.text = title
     }
 
     private fun showError(msg: String) {
