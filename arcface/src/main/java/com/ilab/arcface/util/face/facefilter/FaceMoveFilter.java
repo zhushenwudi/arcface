@@ -2,6 +2,7 @@ package com.ilab.arcface.util.face.facefilter;
 
 import android.graphics.Rect;
 
+import com.arcsoft.face.FaceInfo;
 import com.ilab.arcface.util.face.model.FacePreviewInfo;
 
 import java.util.Iterator;
@@ -37,7 +38,11 @@ public class FaceMoveFilter implements FaceRecognizeFilter {
             if (rectDeque.remainingCapacity() == 0) {
                 rectDeque.removeLast();
             }
-            rectDeque.push(facePreviewInfo.getFaceInfoRgb().getRect());
+            final FaceInfo faceInfo = facePreviewInfo.getFaceInfoRgb();
+            if (faceInfo == null) {
+                continue;
+            }
+            rectDeque.push(faceInfo.getRect());
 
             if (!facePreviewInfo.isQualityPass()) {
                 continue;

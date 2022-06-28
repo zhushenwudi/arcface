@@ -44,7 +44,7 @@ abstract class ArcBaseActivity<VM: BaseAppViewModel> : BaseVmDbActivity<FaceAppV
     private var preFaceStatus = 2
 
     final override fun initDataBind(): View {
-        bind = DataBindingUtil.inflate(layoutInflater, R.layout.activity_face, null, false)
+        bind = ActivityFaceBinding.inflate(layoutInflater)
         bind.lifecycleOwner = this
         return bind.root
     }

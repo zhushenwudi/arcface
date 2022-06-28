@@ -688,8 +688,12 @@ public class FaceHelper implements FaceListener {
             if (nv21Data == null) {
                 return;
             }
+            final FaceInfo faceInfo = facePreviewInfo.getFaceInfoRgb();
+            if (faceInfo == null) {
+                return;
+            }
             this.nv21Data = nv21Data;
-            this.faceInfo = new FaceInfo(facePreviewInfo.getFaceInfoRgb());
+            this.faceInfo = new FaceInfo(faceInfo);
             this.width = width;
             this.height = height;
             this.format = format;
@@ -777,24 +781,28 @@ public class FaceHelper implements FaceListener {
         /**
          * 异步活体任务的构造函数
          *
-         * @param nv21Data     可见光或红外图像数据
-         * @param faceInfo     可见光人脸检测得到的人脸信息
-         * @param width        图像宽度
-         * @param height       图像高度
-         * @param format       图像格式
-         * @param livenessType 活体检测类型，可以是可见光活体检测{@link LivenessType#RGB}或红外活体检测{@link LivenessType#IR}
-         * @param waitLock     活体检测通过后，调用该对象的notifyAll函数，通知识别线程活体已通过
+         * @param nv21Data         可见光或红外图像数据
+         * @param facePreviewInfo  可见光人脸检测得到的人脸信息
+         * @param width            图像宽度
+         * @param height           图像高度
+         * @param format           图像格式
+         * @param livenessType     活体检测类型，可以是可见光活体检测{@link LivenessType#RGB}或红外活体检测{@link LivenessType#IR}
+         * @param waitLock         活体检测通过后，调用该对象的notifyAll函数，通知识别线程活体已通过
          */
-        private FaceLivenessDetectRunnable(byte[] nv21Data, FacePreviewInfo faceInfo, int width, int height, int format, LivenessType livenessType, Object waitLock) {
+        private FaceLivenessDetectRunnable(byte[] nv21Data, FacePreviewInfo facePreviewInfo, int width, int height, int format, LivenessType livenessType, Object waitLock) {
             if (nv21Data == null) {
                 return;
             }
+            final FaceInfo faceInfo = facePreviewInfo.getFaceInfoRgb();
+            if (faceInfo == null) {
+                return;
+            }
             this.nv21Data = nv21Data;
-            this.faceInfo = new FaceInfo(faceInfo.getFaceInfoRgb());
+            this.faceInfo = new FaceInfo(faceInfo);
             this.width = width;
             this.height = height;
             this.format = format;
-            this.trackId = faceInfo.getTrackId();
+            this.trackId = facePreviewInfo.getTrackId();
             this.livenessType = livenessType;
             this.waitLock = waitLock;
         }

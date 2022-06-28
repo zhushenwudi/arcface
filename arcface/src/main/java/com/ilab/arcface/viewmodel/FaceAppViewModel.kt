@@ -274,13 +274,13 @@ class FaceAppViewModel : BaseAppViewModel() {
                     var processRgbLivenessCode = -1
                     flEngine?.let {
                         synchronized(it) {
-                            if (facePreviewInfoList[0].faceInfoRgb != null) {
+                            facePreviewInfoList[0].faceInfoRgb?.run {
                                 processRgbLivenessCode = it.process(
                                     nv21,
                                     previewSize!!.width,
                                     previewSize!!.height,
                                     FaceEngine.CP_PAF_NV21,
-                                    listOf(facePreviewInfoList[0].faceInfoRgb),
+                                    listOf(this),
                                     FaceEngine.ASF_LIVENESS
                                 )
                             }
@@ -408,7 +408,7 @@ class FaceAppViewModel : BaseAppViewModel() {
                     val faceRect = FaceUtil.getBestRect(
                         previewSize!!.width,
                         previewSize!!.height,
-                        it.faceInfoRgb.rect
+                        it.faceInfoRgb?.rect
                     )
                     faceRect?.apply {
                         left = left and 3.inv()
@@ -449,10 +449,11 @@ class FaceAppViewModel : BaseAppViewModel() {
     private fun checkFaceInDetectArea(
         facePreviewInfo: FacePreviewInfo
     ): Boolean {
-        val facePreviewRect = facePreviewInfo.faceInfoRgb.rect
         if (leftMargin <= 0) {
             return false
         }
+        val faceInfo = facePreviewInfo.faceInfoRgb ?: return false
+        val facePreviewRect = faceInfo.rect
         // 因为镜像翻转了，所以将facePreviewRect的坐标切换为正常坐标
         val faceRect = Rect(
             previewSize!!.width - facePreviewRect.right + leftMargin,

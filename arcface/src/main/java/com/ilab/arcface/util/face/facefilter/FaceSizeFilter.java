@@ -2,6 +2,7 @@ package com.ilab.arcface.util.face.facefilter;
 
 import android.graphics.Rect;
 
+import com.arcsoft.face.FaceInfo;
 import com.ilab.arcface.util.face.model.FacePreviewInfo;
 
 import java.util.List;
@@ -27,13 +28,15 @@ public class FaceSizeFilter implements FaceRecognizeFilter {
             if (!facePreviewInfo.isQualityPass()) {
                 continue;
             }
-            if (facePreviewInfo.getFaceInfoRgb() != null) {
-                Rect rgbRect = facePreviewInfo.getFaceInfoRgb().getRect();
-                Rect irRect = facePreviewInfo.getFaceInfoIr() == null ? null : facePreviewInfo.getFaceInfoIr().getRect();
-                boolean rgbRectValid = rgbRect == null || (rgbRect.width() > horizontalSize && rgbRect.height() > verticalSize);
-                boolean irRectValid = irRect == null || (irRect.width() > horizontalSize && irRect.height() > verticalSize);
-                facePreviewInfo.setQualityPass(rgbRectValid && irRectValid);
+            final FaceInfo faceInfo = facePreviewInfo.getFaceInfoRgb();
+            if (faceInfo == null) {
+                continue;
             }
+            Rect rgbRect = faceInfo.getRect();
+            Rect irRect = facePreviewInfo.getFaceInfoIr() == null ? null : facePreviewInfo.getFaceInfoIr().getRect();
+            boolean rgbRectValid = rgbRect == null || (rgbRect.width() > horizontalSize && rgbRect.height() > verticalSize);
+            boolean irRectValid = irRect == null || (irRect.width() > horizontalSize && irRect.height() > verticalSize);
+            facePreviewInfo.setQualityPass(rgbRectValid && irRectValid);
         }
     }
 }
