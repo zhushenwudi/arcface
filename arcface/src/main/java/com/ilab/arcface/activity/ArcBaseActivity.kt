@@ -98,6 +98,7 @@ abstract class ArcBaseActivity<VM: BaseAppViewModel> : BaseVmDbActivity<FaceAppV
                 initEngine()
             } else if (it != -1) {
                 Log.e(TAG, "激活失败: state == $it")
+                bind.tvError.text = "$it"
                 getActiveKey(true)
             }
         }
