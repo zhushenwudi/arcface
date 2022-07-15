@@ -4,5 +4,6 @@
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
     <color name="login_bottom">#4FAEFF</color>
-    <color name="login_top">#76EAFF</color>\
+    <color name="login_top">#76EAFF</color>
+    <color name="BayofMany">#2a4283</color>
 </resources>

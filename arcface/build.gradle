@@ -39,8 +39,8 @@ android {
 
 dependencies {
     compileOnly fileTree(dir: "libs", include: ["*.jar"])
-    implementation 'com.google.android.material:material:1.6.0'
-    implementation 'com.github.zhushenwudi:base:1.5.2'
+    implementation 'com.google.android.material:material:1.6.1'
+    compileOnly 'com.github.zhushenwudi:base:1.5.4'
     implementation "io.reactivex.rxjava2:rxjava:2.2.21"
     implementation "io.reactivex.rxjava2:rxandroid:2.1.1"
     implementation 'com.github.jitpack:android-example:1.0.1'

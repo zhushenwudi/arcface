@@ -336,6 +336,7 @@ abstract class ArcBaseActivity<VM: BaseAppViewModel> : BaseVmDbActivity<FaceAppV
     }
 
     private fun showError(msg: String) {
+        bind.tvError.text = msg
         Log.e(TAG, msg)
     }
 
