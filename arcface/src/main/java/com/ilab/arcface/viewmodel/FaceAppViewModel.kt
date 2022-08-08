@@ -153,6 +153,10 @@ class FaceAppViewModel : BaseAppViewModel() {
         }
     }
 
+    fun setRect(rect: Rect) {
+        faceHelper?.setRecognizeArea(rect)
+    }
+
     /**
      * 当 Rgb 相机打开时
      */
@@ -242,7 +246,7 @@ class FaceAppViewModel : BaseAppViewModel() {
      * @param nv21 准备转换成图像的 Rgb 数据
      */
     fun onPreviewFrame(nv21: ByteArray): List<FacePreviewInfo>? {
-        val facePreviewInfoList = faceHelper?.onPreviewFrame(nv21, irNv21, false)
+        val facePreviewInfoList = faceHelper?.onPreviewFrame(nv21, irNv21, true)
         if (!facePreviewInfoList.isNullOrEmpty()) {
             clearLeftFace(facePreviewInfoList)
             return processLiveness(nv21, irNv21, facePreviewInfoList)

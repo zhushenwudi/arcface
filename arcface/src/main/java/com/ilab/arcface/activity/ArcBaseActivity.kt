@@ -5,16 +5,12 @@ import android.graphics.Shader
 import android.hardware.Camera
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
-import android.widget.FrameLayout
-import androidx.databinding.DataBindingUtil
 import com.arcsoft.face.ErrorInfo
 import com.arcsoft.face.LivenessInfo
 import com.ftd.livepermissions.LivePermissions
 import com.ftd.livepermissions.PermissionResult
-import com.ilab.arcface.BuildConfig
 import com.ilab.arcface.Const
 import com.ilab.arcface.Const.COMMON_PERMISSION
 import com.ilab.arcface.R
@@ -31,10 +27,9 @@ import com.zhushenwudi.base.ext.view.clickNoRepeat
 import com.zhushenwudi.base.mvvm.v.BaseVmDbActivity
 import com.zhushenwudi.base.mvvm.vm.BaseAppViewModel
 import com.zhushenwudi.base.network.manager.NetState
-import java.lang.reflect.InvocationTargetException
-import java.lang.reflect.ParameterizedType
 
-abstract class ArcBaseActivity<VM: BaseAppViewModel> : BaseVmDbActivity<FaceAppViewModel, ActivityFaceBinding>(),
+abstract class ArcBaseActivity<VM : BaseAppViewModel> :
+    BaseVmDbActivity<FaceAppViewModel, ActivityFaceBinding>(),
     OnGlobalLayoutListener {
     protected var allowedHandle: Boolean = true//是否允许处理识别
     private var rgbFaceRectTransformer: FaceRectTransformer? = null
@@ -174,11 +169,9 @@ abstract class ArcBaseActivity<VM: BaseAppViewModel> : BaseVmDbActivity<FaceAppV
                 facePreviewInfoList?.let {
                     rgbFaceRectTransformer?.apply {
                         mViewModel.parseFaceInfo(it, nv21)
-                        if (!BuildConfig.DEBUG) {
-                            bind.dualCameraFaceRectView.clearFaceInfo()
-                            bind.dualCameraFaceRectViewIr.clearFaceInfo()
-//                            drawPreviewInfo(it)
-                        }
+                        bind.dualCameraFaceRectView.clearFaceInfo()
+                        bind.dualCameraFaceRectViewIr.clearFaceInfo()
+                        drawPreviewInfo(it)
                     }
                 }
             }
@@ -308,7 +301,9 @@ abstract class ArcBaseActivity<VM: BaseAppViewModel> : BaseVmDbActivity<FaceAppV
 
     private fun initEngine() {
         mViewModel.init(DualCameraHelper.canOpenDualCamera())
-        mViewModel.faceDetectRect = FaceUtil.getRectInScreen(bind.faceRectView)
+        val rect = FaceUtil.getRectInScreen(bind.faceRectView)
+        mViewModel.faceDetectRect = rect
+        mViewModel.setRect(rect)
         // 获取识别框检测区域在屏幕的绝对位置
         bind.faceRectView.getGlobalVisibleRect(mViewModel.faceDetectRect)
         initRgbCamera()

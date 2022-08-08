@@ -378,7 +378,9 @@ public class FaceHelper implements FaceListener {
             if (!contained) {
                 RecognizeInfo recognizeInfo = recognizeInfoMap.remove(key);
                 if (recognizeInfo != null) {
-                    recognizeCallback.onNoticeChanged("");
+                    if (recognizeCallback != null) {
+                        recognizeCallback.onNoticeChanged("");
+                    }
                     // 人脸离开时，通知特征提取线程，避免一直等待活体结果
                     synchronized (recognizeInfo.getWaitLock()) {
                         recognizeInfo.getWaitLock().notifyAll();
@@ -1045,6 +1047,7 @@ public class FaceHelper implements FaceListener {
         if (ftFaceList == null || ftFaceList.size() <= 1) {
             return;
         }
+        Log.e("aaa", "keepMaxFace: " + ftFaceList.size());
         FaceInfo maxFaceInfo = ftFaceList.get(0);
         for (FaceInfo faceInfo : ftFaceList) {
             if (faceInfo.getRect().width() > maxFaceInfo.getRect().width()) {
