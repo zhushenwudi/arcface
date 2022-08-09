@@ -5,7 +5,6 @@ import android.Manifest
 object Const {
     const val FACE_APP_ID = "5BVpM8i3Q25zi1PMJAua7GfP7RTwncjzUVbzk6mb7Khd"
     const val FACE_SDK_KEY = "GkkAL4WCgCusbLrsfDxeNtSRcXsuY1w14ihMxLnZBXv3"
-    const val TAG = "aaa"
 
     const val VERIFY_OVER = "人脸验证通过"
     const val FOUND_FACE = "已拿到人脸图片"

@@ -285,9 +285,6 @@ abstract class ArcBaseActivity<VM : BaseAppViewModel> :
     // 联网激活key
     abstract fun getActiveKey(needReGet: Boolean = false)
 
-    // 更新证书
-//    abstract fun updateLicence(licence: String)
-
     // 人脸图片 base 字符串
     abstract fun onDetectSuccess(imgBase64: String)
 
@@ -301,15 +298,22 @@ abstract class ArcBaseActivity<VM : BaseAppViewModel> :
 
     private fun initEngine() {
         mViewModel.init(DualCameraHelper.canOpenDualCamera())
-        val rect = FaceUtil.getRectInScreen(bind.faceRectView)
-        mViewModel.faceDetectRect = rect
-        mViewModel.setRect(rect)
-        // 获取识别框检测区域在屏幕的绝对位置
-        bind.faceRectView.getGlobalVisibleRect(mViewModel.faceDetectRect)
+        setFaceRect()
         initRgbCamera()
 //        if (DualCameraHelper.hasDualCamera()) {
 //            initIrCamera()
 //        }
+    }
+
+    /**
+     * 设置人脸框与视图关系
+     */
+    private fun setFaceRect() {
+        val rect = FaceUtil.getRectInScreen(bind.flCamera)
+        mViewModel.faceDetectRect = rect
+        mViewModel.setRect(rect)
+        // 获取识别框检测区域在屏幕的绝对位置
+        bind.flCamera.getGlobalVisibleRect(mViewModel.faceDetectRect)
     }
 
     /**

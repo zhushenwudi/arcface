@@ -16,6 +16,7 @@
         android:id="@+id/liveness_root_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/transparent"
         android:orientation="vertical">
 
         <FrameLayout
@@ -122,24 +123,24 @@
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="666dp"
-            android:layout_marginTop="216dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:layout_marginEnd="5dp"
-            android:layout_height="wrap_content"
             android:src="@drawable/bg_hover"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintBottom_toBottomOf="@+id/fl_camera"
+            app:layout_constraintEnd_toEndOf="@+id/fl_camera"
+            app:layout_constraintStart_toStartOf="@+id/fl_camera"
+            app:layout_constraintTop_toTopOf="@+id/fl_camera" />
 
         <ImageView
             android:id="@+id/bg_face"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/bg_face"
+            android:layout_width="700dp"
+            android:layout_height="700dp"
             android:layout_marginTop="20dp"
+            android:src="@drawable/bg_face"
             app:layout_constraintBottom_toBottomOf="@+id/imageView"
             app:layout_constraintEnd_toEndOf="@+id/imageView"
-            app:layout_constraintStart_toStartOf="@+id/imageView"
+            app:layout_constraintStart_toStartOf="@+id/fl_camera"
             app:layout_constraintTop_toTopOf="@+id/imageView" />
 
         <TextView
