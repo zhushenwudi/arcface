@@ -10,8 +10,5 @@
     <style name="ActivityFullScreen" parent="NoActionBar">
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowFullscreen">true</item>
-        <item name="android:windowBackground">@drawable/background</item>
-        <item name="android:textAllCaps">false</item>
-        <item name="android:windowDisablePreview">false</item>
     </style>
 </resources>
