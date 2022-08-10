@@ -23,6 +23,7 @@ import com.ilab.arcface.util.camera.DualCameraHelper
 import com.ilab.arcface.util.face.constants.LivenessType
 import com.ilab.arcface.util.face.model.FacePreviewInfo
 import com.ilab.arcface.viewmodel.FaceAppViewModel
+import com.zhushenwudi.base.app.Ktx
 import com.zhushenwudi.base.ext.view.clickNoRepeat
 import com.zhushenwudi.base.mvvm.v.BaseVmDbActivity
 import com.zhushenwudi.base.mvvm.vm.BaseAppViewModel
@@ -39,6 +40,7 @@ abstract class ArcBaseActivity<VM : BaseAppViewModel> :
     private var preFaceStatus = 2
 
     final override fun initDataBind(): View {
+        Ktx.app = application
         bind = ActivityFaceBinding.inflate(layoutInflater)
         bind.lifecycleOwner = this
         return bind.root
