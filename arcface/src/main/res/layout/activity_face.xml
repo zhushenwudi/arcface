@@ -159,7 +159,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/modal"
-            android:layout_width="600dp"
+            android:layout_width="1280dp"
             android:layout_height="0dp"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/imageView"
