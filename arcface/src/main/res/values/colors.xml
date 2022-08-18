@@ -7,4 +7,5 @@
     <color name="login_top">#76EAFF</color>
     <color name="BayofMany">#2a4283</color>
     <color name="red">#ff0000</color>
+    <color name="transparent">#00000000</color>
 </resources>
