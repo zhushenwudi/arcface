@@ -1,6 +1,15 @@
 plugins {
     id 'com.android.library'
     id 'kotlin-android'
+    id 'maven'
+}
+
+def localProperties = new Properties()
+def localPropertiesFile = rootProject.file('local.properties')
+if (localPropertiesFile.exists()) {
+    localPropertiesFile.withReader('UTF-8') { reader ->
+        localProperties.load(reader)
+    }
 }
 
 android {
@@ -35,13 +44,32 @@ android {
     buildFeatures {
         dataBinding = true
     }
+
+    uploadArchives {
+        configuration = configurations.archives
+        repositories {
+            mavenDeployer {
+                def username = localProperties.getProperty("nexusName")
+                def password = localProperties.getProperty("nexusPwd")
+                repository(url: 'https://nexus3.devops.intelab.cloud/repository/android-maven/') {
+                    authentication(userName: username, password: password)
+                }
+                pom.project {
+                    version '1.0.0'
+                    artifactId 'arcface'
+                    groupId 'com.ilab.android'
+                    packaging 'aar'
+                    description 'init'
+                }
+            }
+        }
+    }
 }
 
 dependencies {
     compileOnly fileTree(dir: "libs", include: ["*.jar"])
     implementation 'com.google.android.material:material:1.6.1'
-    compileOnly 'com.github.zhushenwudi:base:1.5.4'
+    compileOnly 'com.ilab.andorid:base:1.0.0'
     implementation "io.reactivex.rxjava2:rxjava:2.2.21"
     implementation "io.reactivex.rxjava2:rxandroid:2.1.1"
-    implementation 'com.github.jitpack:android-example:1.0.1'
 }
