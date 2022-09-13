@@ -690,6 +690,9 @@ public class FaceHelper implements FaceListener {
             if (nv21Data == null) {
                 return;
             }
+            if (facePreviewInfo == null) {
+                return;
+            }
             final FaceInfo faceInfo = facePreviewInfo.getFaceInfoRgb();
             if (faceInfo == null) {
                 return;
@@ -793,6 +796,9 @@ public class FaceHelper implements FaceListener {
          */
         private FaceLivenessDetectRunnable(byte[] nv21Data, FacePreviewInfo facePreviewInfo, int width, int height, int format, LivenessType livenessType, Object waitLock) {
             if (nv21Data == null) {
+                return;
+            }
+            if (facePreviewInfo == null) {
                 return;
             }
             final FaceInfo faceInfo = facePreviewInfo.getFaceInfoRgb();

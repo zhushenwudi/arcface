@@ -25,6 +25,9 @@ public class FaceSizeFilter implements FaceRecognizeFilter {
     @Override
     public void filter(List<FacePreviewInfo> facePreviewInfoList) {
         for (FacePreviewInfo facePreviewInfo : facePreviewInfoList) {
+            if (facePreviewInfo == null) {
+                return;
+            }
             if (!facePreviewInfo.isQualityPass()) {
                 continue;
             }
