@@ -55,7 +55,7 @@ android {
                     authentication(userName: username, password: password)
                 }
                 pom.project {
-                    version '1.0.0'
+                    version '1.0.1'
                     artifactId 'arcface'
                     groupId 'com.ilab.android'
                     packaging 'aar'
