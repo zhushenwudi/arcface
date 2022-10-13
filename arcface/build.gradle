@@ -13,12 +13,11 @@ if (localPropertiesFile.exists()) {
 }
 
 android {
-    compileSdkVersion 31
-    buildToolsVersion "30.0.3"
+    compileSdkVersion 32
 
     defaultConfig {
         minSdkVersion 25
-        targetSdkVersion 31
+        targetSdkVersion 32
 
         ndk {
             abiFilters 'armeabi-v7a'
@@ -55,7 +54,7 @@ android {
                     authentication(userName: username, password: password)
                 }
                 pom.project {
-                    version '1.0.1'
+                    version '1.0.2'
                     artifactId 'arcface'
                     groupId 'com.ilab.android'
                     packaging 'aar'
@@ -69,7 +68,7 @@ android {
 dependencies {
     compileOnly fileTree(dir: "libs", include: ["*.jar"])
     implementation 'com.google.android.material:material:1.6.1'
-    compileOnly 'com.ilab.andorid:base:1.0.0'
+    compileOnly 'com.ilab.android:base:1.0.3'
     implementation "io.reactivex.rxjava2:rxjava:2.2.21"
     implementation "io.reactivex.rxjava2:rxandroid:2.1.1"
 }
