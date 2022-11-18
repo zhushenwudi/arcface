@@ -54,7 +54,7 @@ android {
                     authentication(userName: username, password: password)
                 }
                 pom.project {
-                    version '1.0.2'
+                    version '1.0.5'
                     artifactId 'arcface'
                     groupId 'com.ilab.android'
                     packaging 'aar'
@@ -68,7 +68,7 @@ android {
 dependencies {
     compileOnly fileTree(dir: "libs", include: ["*.jar"])
     implementation 'com.google.android.material:material:1.6.1'
-    compileOnly 'com.ilab.android:base:1.0.3'
+    compileOnly 'com.ilab.android:base:1.0.6-pre18'
     implementation "io.reactivex.rxjava2:rxjava:2.2.21"
     implementation "io.reactivex.rxjava2:rxandroid:2.1.1"
 }
